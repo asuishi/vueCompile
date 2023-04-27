@@ -13,6 +13,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "codemirror": "5",
+    "fflate": "^0.7.4",
     "pinia": "^2.0.32",
     "vue": "^3.2.47"
   },
