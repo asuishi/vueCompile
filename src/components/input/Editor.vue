@@ -1,8 +1,9 @@
 <script setup lang="ts">
 // import FileSelector from './FileSelector.vue'
-import CodeMirror from './codemirror/CodeMirror.vue'
+import CodeMirror from '@/components/codemirror/CodeMirror.vue'
+
 // import Message from '../Message.vue'
-import { debounce } from '../utils'
+import { debounce } from '@/utils'
 import { ref } from 'vue'
 const value = ref<string>('')
 

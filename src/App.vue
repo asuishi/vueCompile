@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import Layout from './components/Layout.vue';
-import EditorCon from './components/EditorCon.vue'
-import Output from './components/output/Output.vue';
+import Layout from '@/components/Layout.vue';
+import Editor from '@/components/input/Editor.vue'
+'./components/EditorCon.vue'
+import Output from '@/components/output/Output.vue';
 </script>
 
 <template>
 <div class="contianer">
   <Layout>
     <template #left>
-      <EditorCon />
+      <Editor />
     </template>
     <template #right>
       <Output />

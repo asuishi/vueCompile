@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watchEffect } from 'vue'
-import { debounce } from '../../utils'
+import { debounce } from '@/utils'
 import CodeMirror from './codemirror'
 
 export interface Props {
