@@ -39,3 +39,10 @@ export enum ElementTypes {
   SLOT,
   TEMPLATE
 }
+
+export enum ConstantTypes {
+  NOT_CONSTANT = 0,
+  CAN_SKIP_PATCH = 1,
+  CAN_HOIST = 2,
+  CAN_STRINGIFY = 3
+}

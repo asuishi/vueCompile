@@ -8,7 +8,7 @@ import {
   DOMDirectiveTransforms 
 } from '@vue/compiler-dom'
 
-import { stringifyStatic } from '@/tempalte/stringifyStatic'
+// import { stringifyStatic } from '@/tempalte/stringifyStatic'
 import { transform, generate } from '@vue/compiler-core'
 
 
@@ -36,7 +36,7 @@ function creareOptions(options: any = {}) {
       DOMDirectiveTransforms,
       options.directiveTransforms || {} // user transforms
     ),
-    transformHoist:  stringifyStatic
+    // transformHoist:  stringifyStatic
   })
 }
 
