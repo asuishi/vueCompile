@@ -13,9 +13,15 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vue/compiler-core": "^3.2.47",
+    "@vue/compiler-dom": "^3.2.47",
+    "@vue/compiler-sfc": "^3.2.47",
+    "@vue/shared": "^3.2.47",
     "codemirror": "5",
     "fflate": "^0.7.4",
+    "lodash": "^4.17.21",
     "pinia": "^2.0.32",
+    "sucrase": "^3.32.0",
     "vue": "^3.2.47"
   },
   "devDependencies": {

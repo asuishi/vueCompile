@@ -5,7 +5,7 @@ const props = defineProps<{ layout?: string }>()
 const isVertical = computed(() => props.layout === 'vertical')
 
 const container = ref()
-const showOutput = ref(true)
+const showOutput = ref(false)
 const state = reactive({
   dragging: false,
   split: 50

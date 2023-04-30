@@ -1,17 +1,51 @@
 <script setup lang="ts">
-import CodeMirror from '../codemirror/CodeMirror.vue'
-import {  ref } from 'vue'
-const value = ref<string>('const a = 5')
+import CodeMirror from '@/components/codemirror/CodeMirror.vue'
+import { useFileStore } from '@/stores/file'
+import {  computed } from 'vue'
+import { NodeTypes, ElementTypes} from '@/types/nodeTyoes'
+import OutHeaderVue from './OutHeader.vue';
+import {ref } from 'vue'
+function replacer(key: string, value: any) {
+  // Filtering out properties
+  if (key === "loc" || key === 'ns') {
+    return undefined;
+  }
+  if (key === "type") {
+    return `${value}(${NodeTypes[value]})`
+  }
+  if (key === "tagType") {
+    return `${value}(${ElementTypes[value]})`
+  }
+  return value;
+}
 
+const currentMode = ref('parsed')
+const fileStore = useFileStore()
+const file  = computed(() => {
+  switch(currentMode.value) {
+    case 'parsed':
+      return JSON.stringify(fileStore.activeFile.compiled.parsed, replacer, 2)
+    case 'parsedCode':
+      return fileStore.activeFile.compiled.parsedCode;
+    case 'transformed':
+      return JSON.stringify(fileStore.activeFile.compiled.transformed, replacer, 2)
+    default: 
+      return JSON.stringify(fileStore.activeFile.compiled.parsed, replacer, 2)
+  }
+})
+
+const onChange = (m: string) => {
+  currentMode.value = m
+}
 </script>
 
 <template>
   <div class="output-container">
+    <OutHeaderVue @change="onChange"></OutHeaderVue>
     <CodeMirror
-      v-if="mode !== 'preview'"
+      mode="javascript"
       readonly
-      :mode="mode === 'css' ? 'css' : 'javascript'"
-      :value="value"
+      :value="file"
     />
   </div>
 </template>
