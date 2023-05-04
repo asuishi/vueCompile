@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { reactive, ref } from 'vue'
   const emit = defineEmits<(e: 'change', value: string) => void>()
-  const modes  = reactive(['parsed', 'transformed',  'parsedCode'])
+  const modes  = reactive(['parsed', 'transformed',  'parsedCode', 'code'])
   const mode =  ref('parsed')
   const onClick = (m: string) => {
     mode.value = m

@@ -29,6 +29,8 @@ const file  = computed(() => {
       return fileStore.activeFile.compiled.parsedCode;
     case 'transformed':
       return JSON.stringify(fileStore.activeFile.compiled.transformed, replacer, 2)
+    case 'code':
+      return fileStore.activeFile.compiled.js
     default: 
       return JSON.stringify(fileStore.activeFile.compiled.parsed, replacer, 2)
   }

@@ -36,7 +36,7 @@ const welcomeCode = `
 
 export const useFileStore = defineStore('file', () => {
   const activeFile = reactive<File>({
-    filename: 'a.vue',
+    filename: 'app.vue',
     code: welcomeCode,
     compiled:   {
       js: '',
@@ -46,10 +46,12 @@ export const useFileStore = defineStore('file', () => {
     }
   })
 
+  const errors = reactive<any[]>([])
+
 
   function setCode(code: string) {
     activeFile.code =  code
   }
 
-  return { activeFile, setCode }
+  return { activeFile, setCode, errors }
 })

@@ -1,6 +1,7 @@
 import type {File} from '@/stores/file'
 import { transform} from 'sucrase'
 import { parse, compileScript, rewriteDefault, compileTemplate} from 'vue/compiler-sfc'
+import hashId from 'hash-sum'
 export const COMP_IDENTIFIER = `__sfc__`
 import { cloneDeep } from 'lodash'
 import { parseTemplate, transformTemplate, generateTemplate } from  './transformTemplate'
@@ -16,11 +17,14 @@ async function transformTS(src: string) {
     transforms: ['typescript']
   }).code
 }
+
 export async function compileFile(
-  { filename, code, compiled }: File
+  { filename, code, compiled }: File,
+  fileStore: any
 ) {
+  // eslint-disable-next-line no-debugger
   if (!code.trim()) {
-    // errors = []
+    fileStore.errors.length = 0
     return
   }
 
@@ -35,12 +39,14 @@ export async function compileFile(
   if (!filename!.endsWith('.vue')) {
     return
   }
+
+  const id = hashId(filename)
   const { errors, descriptor } = parse(code, {
     filename,
     sourceMap: true
   })
   if (errors.length) {
-    console.log(errors)
+    fileStore.errors  = errors
     return
   }
 
@@ -50,7 +56,8 @@ export async function compileFile(
     (descriptor.scriptSetup && descriptor.scriptSetup.lang)
   const isTS = scriptLang === 'ts'
 
-  const clientScriptResult = await doCompileScript(descriptor, '123', false,isTS )
+  // script
+  const clientScriptResult = await doCompileScript(descriptor, id, false,isTS )
   
   if (!clientScriptResult) {
     return
@@ -58,20 +65,26 @@ export async function compileFile(
   const [clientScript, bindings] = clientScriptResult
   clientCode += clientScript
 
-  doCompileSelf(descriptor,compiled)
+
+  doCompileSelf( 
+    descriptor,
+    id,
+    bindings,
+    false,
+    isTS,
+    compiled
+  )
 
     // template
   // only need dedicated compilation if not using <script setup>
+  
   if (
     descriptor.template &&
     (!descriptor.scriptSetup)
   ) {
-
-    
-
     const clientTemplateResult = await doCompileTemplate(
       descriptor,
-      '123',
+      id,
       bindings,
       false,
       isTS
@@ -90,6 +103,8 @@ export async function compileFile(
   }
 
 }
+
+
 
 async function doCompileScript(
   descriptor: SFCDescriptor,
@@ -145,6 +160,10 @@ async function doCompileScript(
 
 function doCompileSelf( 
   descriptor: SFCDescriptor,
+  id: string,
+  bindingMetadata: BindingMetadata | undefined,
+  ssr: boolean,
+  isTS: boolean,
   compiled: any,
 ) {
   const parsed = parseTemplate(descriptor.template!.content)

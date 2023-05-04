@@ -12,7 +12,7 @@ import { computed } from 'vue'
 
 const onChange = debounce((code: string) => {
   fileStore.activeFile.code = code
-  compileFile(fileStore.activeFile)
+  compileFile(fileStore.activeFile, fileStore)
 }, 250)
 
 const activeMode = computed(() => {
