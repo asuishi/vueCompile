@@ -10,13 +10,13 @@
 </script>
 <template>
   <div class="tab-buttons">
-  <button
-    v-for="m of modes"
-    :key="m"
-    :class="{ active: mode === m }"
-    @click="onClick(m)"
-  >
-      <span>{{ m }}</span>
+    <button
+      v-for="m of modes"
+      :key="m"
+      :class="{ active: mode === m }"
+      @click="onClick(m)"
+    >
+        <span>{{ m }}</span>
     </button>
   </div>
 </template>
@@ -25,7 +25,7 @@
 .tab-buttons {
   box-sizing: border-box;
   border-bottom: 1px solid var(--border);
-  background-color: var(--bg);
+  background-color: #130303;
   height: var(--header-height);
   overflow: hidden;
 }

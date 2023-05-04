@@ -40,7 +40,7 @@ const activeMode = computed(() => {
 
 <style scoped>
 .editor-container {
-  background-color: aqua;
+  background-color: transparent;
   height: 100%;
   overflow: hidden;
   position: relative;
