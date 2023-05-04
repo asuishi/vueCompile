@@ -18,16 +18,16 @@ async function transformTS(src: string) {
   }).code
 }
 
-export async function compileFile(
+
+async function parseSFC( 
   { filename, code, compiled }: File,
   fileStore: any
 ) {
-  // eslint-disable-next-line no-debugger
+
   if (!code.trim()) {
     fileStore.errors.length = 0
     return
   }
-
   if (filename.endsWith('.js') || filename.endsWith('.ts')) {
     if (filename!.endsWith('.ts')) {
       code = await transformTS(code!)
@@ -37,18 +37,31 @@ export async function compileFile(
   }
 
   if (!filename!.endsWith('.vue')) {
-    return
+    return false
   }
-
-  const id = hashId(filename)
+  // 处理sfc
   const { errors, descriptor } = parse(code, {
     filename,
     sourceMap: true
   })
   if (errors.length) {
     fileStore.errors  = errors
+    return false
+  }
+  return descriptor
+}
+
+export async function compileFile(
+  { filename, code, compiled }: File,
+  fileStore: any
+) {
+  const descriptor = await  parseSFC( { filename, code, compiled }, fileStore)
+
+  if(!descriptor) {
     return
   }
+  
+  const id = hashId(filename)
 
   let clientCode = ''
   const scriptLang =
@@ -66,13 +79,14 @@ export async function compileFile(
   clientCode += clientScript
 
 
-  doCompileSelf( 
+  doCompileStep( 
     descriptor,
     id,
     bindings,
     false,
     isTS,
-    compiled
+    compiled,
+    fileStore
   )
 
     // template
@@ -158,28 +172,53 @@ async function doCompileScript(
 }
 
 
-function doCompileSelf( 
+function doCompileStep( 
   descriptor: SFCDescriptor,
   id: string,
   bindingMetadata: BindingMetadata | undefined,
   ssr: boolean,
   isTS: boolean,
   compiled: any,
+  fileStore: any,
 ) {
-  const parsed = parseTemplate(descriptor.template!.content)
+  const longId = `data-v-${id}`
+  const baseOptions  = {
+    mode: 'module',
+    prefixIdentifiers: true,
+    hoistStatic: true,
+    cacheHandlers: true,
+    scopeId: longId,
+    slotted: undefined,
+    id: id,
+    isProd: false,
+    sourceMap: true,
+    filename: 'app.vue',
+    ssrCssVars: undefined,
+    compilerOptions: {
+      bindingMetadata,
+      expressionPlugins: isTS ? ['typescript'] : undefined
+    },
+    onError: (e: any) => fileStore.errors.push(e),
+    onWarn: (w: any) => fileStore.warnings.push(w)
+  }
+
+  const parsed = parseTemplate(descriptor.template!.content, baseOptions)
   compiled.parsed = cloneDeep(parsed)
 
-  const transformed = transformTemplate(parsed)
+  const transformed = transformTemplate(parsed, baseOptions)
   compiled.transformed = transformed
-  const generateTemplater = generateTemplate(transformed)
+  const generateTemplater = generateTemplate(transformed, baseOptions)
   
   const fnName =`render`
-
-  const code =
+  let code = `const __sfc__ = {}`
+  code += 
     `\n${generateTemplater.code.replace(
       /\nexport (function|const) (render|ssrRender)/,
       `$1 ${fnName}`
     )}` + `\n__sfc__.${fnName} = ${fnName}`
+
+  code += 
+    `\n__sfc__.__file = "App.vue"\nexport default __sfc__`
 
   compiled.parsedCode = code
 }

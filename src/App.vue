@@ -11,6 +11,9 @@ watchEffect(() => {
   if(fileStore.errors.length > 0) {
     console.log(fileStore.errors)
   }
+  if(fileStore.warnings.length > 0) {
+    console.log(fileStore.errors)
+  }
 })
 </script>
 

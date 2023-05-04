@@ -47,11 +47,11 @@ export const useFileStore = defineStore('file', () => {
   })
 
   const errors = reactive<any[]>([])
-
+  const warnings = reactive<any[]>([])
 
   function setCode(code: string) {
     activeFile.code =  code
   }
 
-  return { activeFile, setCode, errors }
+  return { activeFile, setCode, errors, warnings }
 })

@@ -2,22 +2,11 @@
 import CodeMirror from '@/components/codemirror/CodeMirror.vue'
 import { useFileStore } from '@/stores/file'
 import {  computed } from 'vue'
-import { NodeTypes, ElementTypes} from '@/types/nodeTyoes'
+
 import OutHeaderVue from './OutHeader.vue';
+import { replacer } from '@/utils/replacer'
 import {ref } from 'vue'
-function replacer(key: string, value: any) {
-  // Filtering out properties
-  if (key === "loc" || key === 'ns') {
-    return undefined;
-  }
-  if (key === "type") {
-    return `${value}(${NodeTypes[value]})`
-  }
-  if (key === "tagType") {
-    return `${value}(${ElementTypes[value]})`
-  }
-  return value;
-}
+
 
 const currentMode = ref('parsed')
 const fileStore = useFileStore()
