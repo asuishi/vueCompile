@@ -18,6 +18,7 @@ specifiers:
   '@vue/test-utils': ^2.3.0
   '@vue/tsconfig': ^0.1.3
   codemirror: '5'
+  compiler-step: 3.3.0-alpha.6
   eslint: ^8.34.0
   eslint-plugin-vue: ^9.9.0
   fflate: ^0.7.4
@@ -44,6 +45,7 @@ dependencies:
   '@vue/compiler-sfc': 3.2.47
   '@vue/shared': 3.2.47
   codemirror: 5.65.13
+  compiler-step: registry.npmjs.org/compiler-step/3.3.0-alpha.6
   fflate: 0.7.4
   hash-sum: 2.0.0
   lodash: 4.17.21
@@ -1004,11 +1006,27 @@ packages:
       estree-walker: 2.0.2
       source-map: 0.6.1
 
+  /@vue/compiler-core/3.3.0-alpha.6:
+    resolution: {integrity: sha512-F3ta1E3977gENdvm5lwXQjYqrf6wVg7HroMMNERDQvjJMC9DOMMldGWSPsZ4XPWEu5Y+zvnWfgfdudf4SaJ3SQ==}
+    dependencies:
+      '@babel/parser': 7.21.4
+      '@vue/shared': 3.3.0-alpha.6
+      estree-walker: 2.0.2
+      source-map: 0.6.1
+    dev: false
+
   /@vue/compiler-dom/3.2.47:
     resolution: {integrity: sha512-dBBnEHEPoftUiS03a4ggEig74J2YBZ2UIeyfpcRM2tavgMWo4bsEfgCGsu+uJIL/vax9S+JztH8NmQerUo7shQ==}
     dependencies:
       '@vue/compiler-core': 3.2.47
       '@vue/shared': 3.2.47
+
+  /@vue/compiler-dom/3.3.0-alpha.6:
+    resolution: {integrity: sha512-7m6lR9PWa5GtNh/jRn0zWSP5/rteadDni9hghtwm9gMhGpnt//DB91Do9EkQT58w0I6/ZxMwBuGiM+vh0e2ZIA==}
+    dependencies:
+      '@vue/compiler-core': 3.3.0-alpha.6
+      '@vue/shared': 3.3.0-alpha.6
+    dev: false
 
   /@vue/compiler-sfc/3.2.47:
     resolution: {integrity: sha512-rog05W+2IFfxjMcFw10tM9+f7i/+FFpZJJ5XHX72NP9eC2uRD+42M3pYcQqDXVYoj74kHMSEdQ/WmCjt8JFksQ==}
@@ -1029,6 +1047,13 @@ packages:
     dependencies:
       '@vue/compiler-dom': 3.2.47
       '@vue/shared': 3.2.47
+
+  /@vue/compiler-ssr/3.3.0-alpha.6:
+    resolution: {integrity: sha512-enZua8RfLVTwdym9Tatpk2vfCux/JNaw6LDjRzHBnpJ015lU5gzzBjg2PoHwchQXGMUf+/GdugmgduspH6ClIQ==}
+    dependencies:
+      '@vue/compiler-dom': 3.3.0-alpha.6
+      '@vue/shared': 3.3.0-alpha.6
+    dev: false
 
   /@vue/devtools-api/6.5.0:
     resolution: {integrity: sha512-o9KfBeaBmCKl10usN4crU53fYtC1r7jJwdGKjPT24t348rHxgfpZ0xL3Xm/gLUYnc0oTp8LAmrxOeLyu6tbk2Q==}
@@ -1076,6 +1101,16 @@ packages:
       estree-walker: 2.0.2
       magic-string: 0.25.9
 
+  /@vue/reactivity-transform/3.3.0-alpha.6:
+    resolution: {integrity: sha512-2GsrFtVqajF07S+3p6niQ3RQtY9b8ga80DzPTUEVzNgnsT4h2FjaI/1MZ8XrXjEWCIClkkBkoE3s7gJsn8mAbQ==}
+    dependencies:
+      '@babel/parser': 7.21.4
+      '@vue/compiler-core': 3.3.0-alpha.6
+      '@vue/shared': 3.3.0-alpha.6
+      estree-walker: 2.0.2
+      magic-string: 0.30.0
+    dev: false
+
   /@vue/reactivity/3.2.47:
     resolution: {integrity: sha512-7khqQ/75oyyg+N/e+iwV6lpy1f5wq759NdlS1fpAhFXa8VeAIKGgk2E/C4VF59lx5b+Ezs5fpp/5WsRYXQiKxQ==}
     dependencies:
@@ -1105,6 +1140,10 @@ packages:
 
   /@vue/shared/3.2.47:
     resolution: {integrity: sha512-BHGyyGN3Q97EZx0taMQ+OLNuZcW3d37ZEVmEAyeoA9ERdGvm9Irc/0Fua8SNyOtV1w6BS4q25wbMzJujO9HIfQ==}
+
+  /@vue/shared/3.3.0-alpha.6:
+    resolution: {integrity: sha512-KwK7FAXqzCgQHSJ+6NQOrnCQyu9LZ8JRudKULn2MZ0Jnn6EkrNYRqzbEs5nisPW4VK/nnt11uk4EFvbbSAIteQ==}
+    dev: false
 
   /@vue/test-utils/2.3.2_vue@3.2.47:
     resolution: {integrity: sha512-hJnVaYhbrIm0yBS0+e1Y0Sj85cMyAi+PAbK4JHqMRUZ6S622Goa+G7QzkRSyvCteG8wop7tipuEbHoZo26wsSA==}
@@ -2508,6 +2547,13 @@ packages:
     dependencies:
       sourcemap-codec: 1.4.8
 
+  /magic-string/0.30.0:
+    resolution: {integrity: sha512-LA+31JYDJLs82r2ScLrlz1GjSgu66ZV518eyWT+S8VhyQn/JL0u9MeBOvQMGYiPk1DBiSN9DDMOcXvigJZaViQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.4.15
+    dev: false
+
   /memorystream/0.3.1:
     resolution: {integrity: sha512-S3UwM3yj5mtUSEfP41UZmt/0SCoVYUcU1rkXv+BQ5Ig8ndL4sPoJNBUJERafdPb5jjHJGuMgytgKvKIf58XNBw==}
     engines: {node: '>= 0.10.0'}
@@ -3712,3 +3758,20 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+  registry.npmjs.org/compiler-step/3.3.0-alpha.6:
+    resolution: {integrity: sha512-2Ga169ZwH1ufzoyRbSIR+Pd8hvxJS4NVO354n1q7uD48Lnv1aO8c2+FWs1QlsGOqtDktxANpsB/raDbpkgmfEA==, registry: https://registry.npmmirror.com/, tarball: https://registry.npmjs.org/compiler-step/-/compiler-step-3.3.0-alpha.6.tgz}
+    name: compiler-step
+    version: 3.3.0-alpha.6
+    dependencies:
+      '@babel/parser': 7.21.4
+      '@vue/compiler-core': 3.3.0-alpha.6
+      '@vue/compiler-dom': 3.3.0-alpha.6
+      '@vue/compiler-ssr': 3.3.0-alpha.6
+      '@vue/reactivity-transform': 3.3.0-alpha.6
+      '@vue/shared': 3.3.0-alpha.6
+      estree-walker: 2.0.2
+      magic-string: 0.30.0
+      postcss: 8.4.23
+      source-map: 0.6.1
+    dev: false

@@ -4,7 +4,7 @@ import { parse, compileScript, rewriteDefault, compileTemplate} from 'vue/compil
 import hashId from 'hash-sum'
 export const COMP_IDENTIFIER = `__sfc__`
 import { cloneDeep } from 'lodash'
-import { parseTemplate, transformTemplate, generateTemplate } from  './transformTemplate'
+import { parseTemplate, transformTemplate, generateTemplate } from  'compiler-step'
 import type {
   SFCDescriptor,
   BindingMetadata,

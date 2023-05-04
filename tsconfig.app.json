@@ -8,6 +8,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "isolatedModules": false
+    "isolatedModules": false,
+    "esModuleInterop": true,
   }
 }
